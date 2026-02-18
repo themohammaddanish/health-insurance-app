@@ -37,38 +37,59 @@ A full-stack health insurance platform with AI-powered premium prediction, built
 
 ## 📦 Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React (Vite), Tailwind CSS, Chart.js, Axios |
-| Backend | Node.js, Express, MySQL2, JWT, bcrypt |
-| ML Service | Python FastAPI, scikit-learn, joblib |
-| Database | MySQL 8.0 |
-| DevOps | Docker, Docker Compose |
+| Layer      | Technology                                  |
+| ---------- | ------------------------------------------- |
+| Frontend   | React (Vite), Tailwind CSS, Chart.js, Axios |
+| Backend    | Node.js, Express, MySQL2, JWT, bcrypt       |
+| ML Service | Python FastAPI, scikit-learn, joblib        |
+| Database   | MySQL 8.0                                   |
+| DevOps     | Docker, Docker Compose                      |
 
 ## 🛠 Setup Instructions
 
 ### Prerequisites
-- Node.js 18+
-- Python 3.11+
-- MySQL 8.0
-- (Optional) Docker & Docker Compose
 
-### 1. Database Setup
+- **Node.js 18+** — https://nodejs.org
+- **Python 3.9+** — https://python.org
+- **Docker Desktop** — https://docker.com (for MySQL)
+
+### ⚡ Quick Start (One Command)
+
+Clone the repo and run the all-in-one setup script:
+
+```powershell
+git clone <repo-url>
+cd health-insurance-app
+powershell -ExecutionPolicy Bypass -File .\setup-and-run.ps1
+```
+
+This single script will:
+
+1. ✅ Check that Node.js, Python, and Docker are installed
+2. ✅ Create & start a MySQL container with the database schema
+3. ✅ Create the server `.env` configuration file
+4. ✅ Install all Python dependencies (ML service)
+5. ✅ Install all Node.js dependencies (server + client)
+6. ✅ Launch all 3 services in separate terminal windows
+
+### Manual Setup (Step by Step)
+
+#### 1. Database Setup
 
 ```bash
 mysql -u root -p < database/schema.sql
 ```
 
-### 2. Backend Server
+#### 2. Backend Server
 
 ```bash
 cd server
 cp .env.example .env    # Edit with your DB credentials
 npm install
-npm run dev             # Starts on port 5000
+npm run dev             # Starts on port 5001
 ```
 
-### 3. ML Microservice
+#### 3. ML Microservice
 
 ```bash
 cd ml-service
@@ -76,16 +97,15 @@ pip install -r requirements.txt
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-### 4. Frontend
+#### 4. Frontend
 
 ```bash
 cd client
-cp .env.example .env
 npm install
 npm run dev             # Starts on port 3000
 ```
 
-### Docker (Alternative)
+### Docker Compose (Alternative)
 
 ```bash
 docker-compose up --build
@@ -93,42 +113,46 @@ docker-compose up --build
 
 ## 🔐 Default Admin Account
 
-| Field | Value |
-|-------|-------|
-| Email | admin@healthinsure.com |
-| Password | admin123 |
+| Field    | Value                  |
+| -------- | ---------------------- |
+| Email    | admin@healthinsure.com |
+| Password | admin123               |
 
 ## 📡 API Endpoints
 
 ### Authentication
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/register` | Register new user |
-| POST | `/api/auth/login` | Login user |
+
+| Method | Endpoint             | Description       |
+| ------ | -------------------- | ----------------- |
+| POST   | `/api/auth/register` | Register new user |
+| POST   | `/api/auth/login`    | Login user        |
 
 ### User (Protected)
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/user/profile` | Get user profile |
-| POST | `/api/user/predict` | Submit prediction |
-| GET | `/api/user/predictions` | Get prediction history |
+
+| Method | Endpoint                | Description            |
+| ------ | ----------------------- | ---------------------- |
+| GET    | `/api/user/profile`     | Get user profile       |
+| POST   | `/api/user/predict`     | Submit prediction      |
+| GET    | `/api/user/predictions` | Get prediction history |
 
 ### Admin (Admin Only)
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/admin/users` | List all users |
-| GET | `/api/admin/plans` | List all plans |
-| POST | `/api/admin/plans` | Create plan |
-| PUT | `/api/admin/plans/:id` | Update plan |
-| DELETE | `/api/admin/plans/:id` | Delete plan |
-| GET | `/api/admin/analytics` | Platform analytics |
+
+| Method | Endpoint               | Description        |
+| ------ | ---------------------- | ------------------ |
+| GET    | `/api/admin/users`     | List all users     |
+| GET    | `/api/admin/plans`     | List all plans     |
+| POST   | `/api/admin/plans`     | Create plan        |
+| PUT    | `/api/admin/plans/:id` | Update plan        |
+| DELETE | `/api/admin/plans/:id` | Delete plan        |
+| GET    | `/api/admin/analytics` | Platform analytics |
 
 ### ML Service
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/predict` | Predict premium |
-| GET | `/health` | Health check |
-| GET | `/docs` | Swagger API docs |
+
+| Method | Endpoint   | Description      |
+| ------ | ---------- | ---------------- |
+| POST   | `/predict` | Predict premium  |
+| GET    | `/health`  | Health check     |
+| GET    | `/docs`    | Swagger API docs |
 
 ## 🧠 ML Model Logic
 
@@ -136,11 +160,12 @@ docker-compose up --build
 - **Age ≥ 25**: Uses `model_rest` + `scaler_rest`
 
 ### Risk Categories
-| Premium Range | Category |
-|--------------|----------|
-| < $5,000 | Low Risk |
+
+| Premium Range    | Category    |
+| ---------------- | ----------- |
+| < $5,000         | Low Risk    |
 | $5,000 – $10,000 | Medium Risk |
-| > $10,000 | High Risk |
+| > $10,000        | High Risk   |
 
 ## 📁 Project Structure
 
